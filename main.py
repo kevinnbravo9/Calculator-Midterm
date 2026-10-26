@@ -4,6 +4,7 @@ from colorama import Fore, Style, init
 
 from app.calculator import Calculator
 from app.calculator_config import CalculatorConfig
+from app.command_decorators import get_registered_commands, register_command
 from app.input_validators import validate_number
 from app.logger import AutoSaveObserver, CalculatorLogger, LoggingObserver
 
@@ -24,21 +25,35 @@ OPERATIONS = {
     "abs_diff",
 }
 
+@register_command("add", "Add two numbers")
+@register_command("subtract", "Subtract two numbers")
+@register_command("multiply", "Multiply two numbers")
+@register_command("divide", "Divide two numbers")
+@register_command("power", "Raise one number to the power of another")
+@register_command("root", "Calculate the nth root of a number")
+@register_command("modulus", "Calculate the remainder of division")
+@register_command("int_divide", "Perform integer division")
+@register_command("percent", "Calculate percentage")
+@register_command("abs_diff", "Calculate absolute difference")
+@register_command("history", "Display calculation history")
+@register_command("clear", "Clear calculation history")
+@register_command("undo", "Undo the last calculation")
+@register_command("redo", "Redo the last undone calculation")
+@register_command("save", "Save calculation history")
+@register_command("load", "Load calculation history")
+@register_command("help", "Display available commands")
+@register_command("exit", "Exit the calculator")
+def register_repl_commands():
+    """Register REPL commands for the dynamic help menu."""
 
 def display_help():
-    """Display available calculator commands."""
+    """Display the dynamically registered calculator commands."""
     print(Fore.CYAN + "\nAvailable Commands:")
-    print("add, subtract, multiply, divide")
-    print("power, root, modulus, int_divide")
-    print("percent, abs_diff")
-    print("history - Display calculation history")
-    print("clear   - Clear calculation history")
-    print("undo    - Undo the last calculation")
-    print("redo    - Redo the last undone calculation")
-    print("save    - Save calculation history")
-    print("load    - Load calculation history")
-    print("help    - Display available commands")
-    print("exit    - Exit the calculator")
+
+    commands = get_registered_commands()
+
+    for name, command_data in reversed(commands.items()):
+        print(f"{name:<12} - {command_data['description']}")
 
 
 def display_history(calculator):
