@@ -4,6 +4,7 @@ from colorama import Fore, Style, init
 
 from app.calculator import Calculator
 from app.calculator_config import CalculatorConfig
+from app.commands import CalculatorCommand
 from app.command_decorators import get_registered_commands, register_command
 from app.input_validators import validate_number
 from app.logger import AutoSaveObserver, CalculatorLogger, LoggingObserver
@@ -174,11 +175,14 @@ def run_repl():
                 config.max_input_value,
             )
 
-            result = calculator.calculate(
-                command,
-                operand1,
-                operand2,
+            calculation_command = CalculatorCommand(
+             calculator,
+             command,
+             operand1,
+             operand2,
             )
+
+            result = calculation_command.execute()
 
             result = round(result, config.precision)
 
