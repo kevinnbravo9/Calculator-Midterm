@@ -40,19 +40,25 @@ def test_custom_configuration(monkeypatch):
     """Test custom configuration values."""
     monkeypatch.setenv("CALCULATOR_LOG_DIR", "custom_logs")
     monkeypatch.setenv("CALCULATOR_HISTORY_DIR", "custom_history")
+    monkeypatch.setenv("CALCULATOR_LOG_FILE", "custom.log")
+    monkeypatch.setenv("CALCULATOR_HISTORY_FILE", "custom.csv")
     monkeypatch.setenv("CALCULATOR_MAX_HISTORY_SIZE", "50")
     monkeypatch.setenv("CALCULATOR_AUTO_SAVE", "false")
     monkeypatch.setenv("CALCULATOR_PRECISION", "4")
     monkeypatch.setenv("CALCULATOR_MAX_INPUT_VALUE", "5000")
+    monkeypatch.setenv("CALCULATOR_DEFAULT_ENCODING", "ascii")
 
     config = CalculatorConfig()
 
     assert config.log_dir == "custom_logs"
     assert config.history_dir == "custom_history"
+    assert config.log_file == "custom.log"
+    assert config.history_file == "custom.csv"
     assert config.max_history_size == 50
     assert config.auto_save is False
     assert config.precision == 4
     assert config.max_input_value == 5000
+    assert config.default_encoding == "ascii"
 
 
 def test_configuration_paths(monkeypatch):

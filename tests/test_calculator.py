@@ -68,10 +68,20 @@ def test_undo_without_history():
 
     assert calculator.undo() is False
 
-
 def test_redo_without_undo():
     """Test redo when there is nothing to redo."""
     calculator = Calculator()
+
+    assert calculator.redo() is False
+
+def test_new_calculation_clears_redo():
+    """Test that a new calculation clears redo history."""
+    calculator = Calculator()
+
+    calculator.calculate("add", 10, 5)
+    calculator.undo()
+
+    calculator.calculate("multiply", 2, 3)
 
     assert calculator.redo() is False
 

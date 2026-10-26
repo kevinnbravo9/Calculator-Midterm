@@ -2,6 +2,7 @@
 
 import pytest
 
+from app.exceptions import OperationError
 from app.operations import OperationFactory
 
 
@@ -40,7 +41,7 @@ def test_zero_errors(operation, a, b):
     """Test operations that cannot use zero as the second value."""
     calculator_operation = OperationFactory.create_operation(operation)
 
-    with pytest.raises(ValueError):
+    with pytest.raises(OperationError):
         calculator_operation.execute(a, b)
 
 
@@ -48,7 +49,7 @@ def test_even_root_of_negative_number():
     """Test that an even root of a negative number raises an error."""
     operation = OperationFactory.create_operation("root")
 
-    with pytest.raises(ValueError):
+    with pytest.raises(OperationError):
         operation.execute(-16, 2)
 
 

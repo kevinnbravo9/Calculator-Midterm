@@ -16,13 +16,3 @@ def validate_number(value, max_value):
         )
 
     return number
-
-
-def validate_operation(operation, valid_operations):
-    """Validate that the requested operation exists."""
-    operation = operation.lower().strip()
-
-    if operation not in valid_operations:
-        raise ValidationError(f"Invalid operation: {operation}")
-
-    return operation

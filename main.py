@@ -1,11 +1,11 @@
 """Command-line interface for the calculator."""
 
-from colorama import Fore, Style, init
-
+from colorama import Fore, init
 from app.calculator import Calculator
 from app.calculator_config import CalculatorConfig
 from app.commands import CalculatorCommand
 from app.command_decorators import get_registered_commands, register_command
+from app.exceptions import CalculatorError
 from app.input_validators import validate_number
 from app.logger import AutoSaveObserver, CalculatorLogger, LoggingObserver
 
@@ -25,6 +25,7 @@ OPERATIONS = {
     "percent",
     "abs_diff",
 }
+
 
 @register_command("add", "Add two numbers")
 @register_command("subtract", "Subtract two numbers")
@@ -46,6 +47,7 @@ OPERATIONS = {
 @register_command("exit", "Exit the calculator")
 def register_repl_commands():
     """Register REPL commands for the dynamic help menu."""
+
 
 def display_help():
     """Display the dynamically registered calculator commands."""
@@ -99,13 +101,13 @@ def create_calculator(config):
             )
         )
 
-    return calculator
+    return calculator, calculator_logger
 
 
 def run_repl():
     """Run the calculator REPL."""
     config = CalculatorConfig()
-    calculator = create_calculator(config)
+    calculator, calculator_logger = create_calculator(config)
 
     print(Fore.GREEN + "Advanced Calculator")
     print("Type 'help' to see available commands.")
@@ -176,23 +178,20 @@ def run_repl():
             )
 
             calculation_command = CalculatorCommand(
-             calculator,
-             command,
-             operand1,
-             operand2,
+                calculator,
+                command,
+                operand1,
+                operand2,
             )
 
             result = calculation_command.execute()
 
             result = round(result, config.precision)
 
-            print(
-                Fore.GREEN
-                + f"Result: {result}"
-                + Style.RESET_ALL
-            )
+            print(Fore.GREEN + f"Result: {result}")
 
-        except Exception as error:
+        except CalculatorError as error:
+            calculator_logger.error(str(error))
             print(Fore.RED + f"Error: {error}")
 
 
