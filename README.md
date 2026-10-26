@@ -4,7 +4,7 @@
 
 This project is an advanced calculator application developed in Python. The calculator provides basic and advanced mathematical operations through a command-line REPL interface. It also includes calculation history, undo and redo functionality, CSV history management, logging, configuration using environment variables, and automated testing.
 
-The project uses several software design patterns, including Factory, Memento, and Observer. Colorama is also used to provide color-coded output in the command-line interface.
+The project uses several software design patterns, including Factory, Memento, Observer, Decorator, and Command. Colorama is also used to provide color-coded output in the command-line interface. The Decorator Pattern is used to support a dynamic help menu, while the Command Pattern encapsulates calculator operations as command objects.
 
 ## Features
 
@@ -30,6 +30,8 @@ The project uses several software design patterns, including Factory, Memento, a
 - Custom exception handling
 - Environment-based configuration
 - Color-coded terminal output
+- Dynamic help menu using the Decorator Pattern
+- Calculator commands using the Command Pattern
 - Automated testing with Pytest
 - Code coverage with pytest-cov
 - GitHub Actions CI workflow
@@ -47,6 +49,14 @@ The Memento Pattern is used to support undo and redo functionality. It stores pr
 ### Observer Pattern
 
 The Observer Pattern is used for logging and automatic history saving. The `LoggingObserver` records calculator activity, while the `AutoSaveObserver` automatically saves the calculation history.
+
+### Decorator Pattern
+
+The Decorator Pattern is used to register calculator commands for the dynamic help menu. Each command and its description are registered using a decorator, allowing the help menu to display the available commands dynamically.
+
+### Command Pattern
+
+The Command Pattern is used to encapsulate calculator operations as command objects. The `CalculatorCommand` class stores the calculator, operation, and operands, and executes the requested calculation through its `execute()` method.
 
 ## Installation
 
@@ -186,12 +196,16 @@ calculator_midterm/
 │   ├── calculation.py
 │   ├── calculator_config.py
 │   ├── calculator_memento.py
+│   ├── command_decorators.py
+│   ├── commands.py
 │   ├── exceptions.py
 │   ├── history.py
 │   ├── input_validators.py
 │   ├── operations.py
 │   └── logger.py
 ├── tests/
+│   ├── test_command_decorators.py
+│   ├── test_commands.py
 ├── .github/
 │   └── workflows/
 │       └── python-app.yml
