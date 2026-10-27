@@ -2,84 +2,63 @@
 
 ## Project Description
 
-This project is an advanced calculator application developed in Python. The calculator provides basic and advanced mathematical operations through a command-line REPL interface. It also includes calculation history, undo and redo functionality, CSV history management, logging, configuration using environment variables, and automated testing.
+This project is an advanced calculator application developed in Python. It supports basic and advanced mathematical operations through a command-line REPL. The calculator also includes calculation history, undo and redo, CSV history management, logging, environment configuration, and automated testing.
 
-The project uses several software design patterns, including Factory, Memento, Observer, Decorator, and Command. Colorama is also used to provide color-coded output in the command-line interface. The Decorator Pattern is used to support a dynamic help menu, while the Command Pattern encapsulates calculator operations as command objects.
+The project uses Factory, Memento, Observer, Decorator, and Command design patterns.
 
 ## Features
 
-- Interactive REPL command-line interface
-- Addition
-- Subtraction
-- Multiplication
-- Division
-- Power
-- Root
-- Modulus
-- Integer division
-- Percentage calculation
-- Absolute difference
+- Basic and advanced mathematical operations
 - Calculation history
 - Undo and redo
-- Clear history
-- Save history to CSV
-- Load history from CSV
+- Save and load history using CSV
 - Automatic history saving
-- Application logging
-- Input validation
-- Custom exception handling
+- Logging
+- Input validation and custom exceptions
 - Environment-based configuration
 - Color-coded terminal output
-- Dynamic help menu using the Decorator Pattern
-- Calculator commands using the Command Pattern
-- Automated testing with Pytest
-- Code coverage with pytest-cov
-- GitHub Actions CI workflow
+- Dynamic help menu
+- Automated testing and code coverage
+- GitHub Actions CI
 
 ## Design Patterns
 
 ### Factory Pattern
 
-The Factory Pattern is used to create and select calculator operations. This makes it easier to organize the different mathematical operations and add new operations in the future.
+The Factory Pattern is used to create and select calculator operations.
 
 ### Memento Pattern
 
-The Memento Pattern is used to support undo and redo functionality. It stores previous states of the calculation history so that the calculator can restore an earlier state when needed.
+The Memento Pattern is used to save previous states for undo and redo.
 
 ### Observer Pattern
 
-The Observer Pattern is used for logging and automatic history saving. The `LoggingObserver` records calculator activity, while the `AutoSaveObserver` automatically saves the calculation history.
+The Observer Pattern is used for logging and automatic history saving.
 
 ### Decorator Pattern
 
-The Decorator Pattern is used to register calculator commands for the dynamic help menu. Each command and its description are registered using a decorator, allowing the help menu to display the available commands dynamically.
+The Decorator Pattern is used to register commands for the dynamic help menu.
 
 ### Command Pattern
 
-The Command Pattern is used to encapsulate calculator operations as command objects. The `CalculatorCommand` class stores the calculator, operation, and operands, and executes the requested calculation through its `execute()` method.
+The Command Pattern is used to execute calculator operations through command objects.
 
-## Installation
+## Setup
 
-Clone the repository and enter the project directory:
+Open the project folder:
 
 ```bash
-git clone <repository-url>
 cd calculator_midterm
 ```
 
-Create a virtual environment:
+Create and activate a virtual environment:
 
 ```bash
 python3 -m venv venv
-```
-
-Activate the virtual environment on macOS/Linux:
-
-```bash
 source venv/bin/activate
 ```
 
-Install the required dependencies:
+Install the dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -109,7 +88,7 @@ Run the calculator with:
 python3 main.py
 ```
 
-The calculator will display a prompt where commands can be entered.
+Type `help` to see the available commands.
 
 ## Available Commands
 
@@ -126,7 +105,7 @@ The calculator will display a prompt where commands can be entered.
 - `percent`
 - `abs_diff`
 
-### History and Application Commands
+### Other Commands
 
 - `history` - Display calculation history
 - `clear` - Clear calculation history
@@ -137,43 +116,25 @@ The calculator will display a prompt where commands can be entered.
 - `help` - Display available commands
 - `exit` - Exit the calculator
 
-## Example
-
-```text
-Advanced Calculator
-Type 'help' to see available commands.
-
-Enter command: add
-Enter first number: 10
-Enter second number: 5
-Result: 15.0
-```
-
-## Color-Coded Output
-
-The calculator uses Colorama to provide color-coded terminal output. Successful operations, errors, warnings, help information, and history messages are displayed using different colors to make the REPL easier to use.
-
 ## Testing
 
-Run all tests with:
+Run all tests:
 
 ```bash
 pytest
 ```
 
-Run the tests with coverage:
+Run tests with coverage:
 
 ```bash
 pytest --cov=app --cov-report=term-missing --cov-fail-under=90
 ```
 
-The project is configured to require at least 90% test coverage.
+The project requires at least 90% test coverage.
 
 ## Continuous Integration
 
-GitHub Actions is configured to automatically install the project dependencies and run the test suite whenever changes are pushed to the `main` branch or a pull request is created.
-
-The CI workflow also verifies that total test coverage remains at or above 90%.
+GitHub Actions automatically runs the tests when changes are pushed to the `main` branch or when a pull request is created. The workflow also checks that coverage remains at or above 90%.
 
 ## Technologies Used
 
@@ -192,8 +153,8 @@ The CI workflow also verifies that total test coverage remains at or above 90%.
 calculator_midterm/
 ├── app/
 │   ├── __init__.py
-│   ├── calculator.py
 │   ├── calculation.py
+│   ├── calculator.py
 │   ├── calculator_config.py
 │   ├── calculator_memento.py
 │   ├── command_decorators.py
@@ -201,17 +162,19 @@ calculator_midterm/
 │   ├── exceptions.py
 │   ├── history.py
 │   ├── input_validators.py
-│   ├── operations.py
-│   └── logger.py
+│   ├── logger.py
+│   └── operations.py
 ├── tests/
-│   ├── test_command_decorators.py
-│   ├── test_commands.py
 ├── .github/
 │   └── workflows/
-│       └── python-app.yml
 ├── .env
 ├── .gitignore
+├── LICENSE
 ├── main.py
 ├── README.md
 └── requirements.txt
 ```
+
+## License
+
+This project uses the MIT License.
