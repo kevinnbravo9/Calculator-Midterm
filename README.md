@@ -174,7 +174,3 @@ calculator_midterm/
 ├── README.md
 └── requirements.txt
 ```
-
-## License
-
-This project uses the MIT License.
