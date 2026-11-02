@@ -8,35 +8,12 @@ from app.command_decorators import get_registered_commands, register_command
 from app.exceptions import CalculatorError
 from app.input_validators import validate_number
 from app.logger import AutoSaveObserver, CalculatorLogger, LoggingObserver
+from app.operations import OperationFactory
 
 
 init(autoreset=True)
 
 
-OPERATIONS = {
-    "add",
-    "subtract",
-    "multiply",
-    "divide",
-    "power",
-    "root",
-    "modulus",
-    "int_divide",
-    "percent",
-    "abs_diff",
-}
-
-
-@register_command("add", "Add two numbers")
-@register_command("subtract", "Subtract two numbers")
-@register_command("multiply", "Multiply two numbers")
-@register_command("divide", "Divide two numbers")
-@register_command("power", "Raise one number to the power of another")
-@register_command("root", "Calculate the nth root of a number")
-@register_command("modulus", "Calculate the remainder of division")
-@register_command("int_divide", "Perform integer division")
-@register_command("percent", "Calculate percentage")
-@register_command("abs_diff", "Calculate absolute difference")
 @register_command("history", "Display calculation history")
 @register_command("clear", "Clear calculation history")
 @register_command("undo", "Undo the last calculation")
@@ -50,8 +27,11 @@ def register_repl_commands():
 
 
 def display_help():
-    """Display the dynamically registered calculator commands."""
+    """Display available calculator operations and commands."""
     print(Fore.CYAN + "\nAvailable Commands:")
+
+    for operation in OperationFactory.get_operations():
+        print(operation)
 
     commands = get_registered_commands()
 
@@ -162,7 +142,7 @@ def run_repl():
                 print(Fore.GREEN + "History loaded.")
                 continue
 
-            if command not in OPERATIONS:
+            if command not in OperationFactory.get_operations():
                 print(Fore.RED + f"Unknown command: {command}")
                 continue
 

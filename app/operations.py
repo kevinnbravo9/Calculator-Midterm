@@ -97,6 +97,11 @@ class OperationFactory:
     }
 
     @classmethod
+    def get_operations(cls):
+        """Return the names of all available operations."""
+        return list(cls._operations.keys())
+    
+    @classmethod
     def create_operation(cls, operation_name: str) -> Operation:
         """Create an operation based on its command name."""
         operation = cls._operations.get(operation_name.lower())
