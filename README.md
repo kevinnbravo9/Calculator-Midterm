@@ -127,7 +127,7 @@ pytest
 Run tests with coverage:
 
 ```bash
-pytest --cov=app --cov-report=term-missing --cov-fail-under=90
+pytest --cov=app --cov=main --cov-report=term-missing --cov-fail-under=90
 ```
 
 The project requires at least 90% test coverage.
@@ -169,7 +169,6 @@ calculator_midterm/
 │   └── workflows/
 ├── .env
 ├── .gitignore
-├── LICENSE
 ├── main.py
 ├── README.md
 └── requirements.txt
