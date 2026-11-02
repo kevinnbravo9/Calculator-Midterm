@@ -125,3 +125,26 @@ def test_load_respects_max_history_size(tmp_path):
     assert len(calculations) == 2
     assert calculations[0].result == 4
     assert calculations[1].result == 6
+
+def test_history_uses_configured_encoding(tmp_path):
+    """Test that history uses the configured CSV encoding."""
+    history = History(encoding="utf-16")
+    calculation = Calculation(
+        "add",
+        2,
+        3,
+        5,
+    )
+    history.add(calculation)
+
+    file_path = tmp_path / "history.csv"
+    history.save_to_csv(file_path)
+
+    loaded_history = History(encoding="utf-16")
+    loaded_history.load_from_csv(file_path)
+
+    calculations = loaded_history.get_all()
+
+    assert len(calculations) == 1
+    assert calculations[0].operation == "add"
+    assert calculations[0].result == 5

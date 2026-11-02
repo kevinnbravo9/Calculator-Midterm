@@ -9,9 +9,12 @@ from app.operations import OperationFactory
 class Calculator:
     """Manage calculations, history, undo/redo, and observers."""
 
-    def __init__(self, max_history_size=100):
+    def __init__(self, max_history_size=100, encoding="utf-8"):
         """Initialize the calculator."""
-        self.history = History(max_size=max_history_size)
+        self.history = History(
+            max_size=max_history_size,
+            encoding=encoding,
+        )
         self.undo_stack = []
         self.redo_stack = []
         self.observers = []
@@ -27,11 +30,11 @@ class Calculator:
 
     def calculate(self, operation_name, operand1, operand2):
         """Perform a calculation and store it in history."""
-        self.undo_stack.append(self.create_memento())
-        self.redo_stack.clear()
-
         operation = OperationFactory.create_operation(operation_name)
         result = operation.execute(operand1, operand2)
+
+        self.undo_stack.append(self.create_memento())
+        self.redo_stack.clear()
 
         calculation = Calculation(
             operation_name,

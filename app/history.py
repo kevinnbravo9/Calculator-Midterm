@@ -12,9 +12,10 @@ from app.exceptions import HistoryError
 class History:
     """Manage calculator history and CSV persistence."""
 
-    def __init__(self, max_size=100):
-        self.calculations = []
-        self.max_size = max_size
+    def __init__(self, max_size=100, encoding="utf-8"):
+         self.calculations = []
+         self.max_size = max_size
+         self.encoding = encoding
 
     def add(self, calculation):
         """Add a calculation to history."""
@@ -55,7 +56,11 @@ class History:
                 ],
             )
 
-            dataframe.to_csv(file_path, index=False)
+            dataframe.to_csv(
+                 file_path,
+                 index=False,
+                 encoding=self.encoding,
+            )
 
         except (OSError, ValueError, pd.errors.ParserError) as exc:
             raise HistoryError(
@@ -68,7 +73,10 @@ class History:
             raise HistoryError("History file does not exist.")
 
         try:
-            dataframe = pd.read_csv(file_path)
+            dataframe = pd.read_csv(
+                file_path,
+                encoding=self.encoding,
+            )
 
             required_columns = {
                 "operation",

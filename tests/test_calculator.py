@@ -1,6 +1,9 @@
 """Tests for the main Calculator class."""
 
+import pytest
+
 from app.calculator import Calculator
+from app.exceptions import OperationError
 
 
 class DummyObserver:
@@ -111,3 +114,23 @@ def test_maximum_history_size():
     assert len(history) == 2
     assert history[0].result == 4
     assert history[1].result == 6
+
+def test_failed_calculation_preserves_undo_redo_state():
+    """Test that a failed calculation does not change undo or redo state."""
+    calculator = Calculator()
+
+    calculator.calculate("add", 2, 3)
+    calculator.calculate("multiply", 4, 5)
+
+    calculator.undo()
+
+    history_before = calculator.get_history()
+    undo_before = calculator.undo_stack.copy()
+    redo_before = calculator.redo_stack.copy()
+
+    with pytest.raises(OperationError):
+        calculator.calculate("divide", 10, 0)
+
+    assert calculator.get_history() == history_before
+    assert calculator.undo_stack == undo_before
+    assert calculator.redo_stack == redo_before

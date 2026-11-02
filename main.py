@@ -81,7 +81,8 @@ def display_history(calculator):
 def create_calculator(config):
     """Create and configure the calculator."""
     calculator = Calculator(
-        max_history_size=config.max_history_size
+         max_history_size=config.max_history_size,
+         encoding=config.default_encoding,
     )
 
     calculator_logger = CalculatorLogger(
